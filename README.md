@@ -104,13 +104,13 @@ Each connection is tested before you save it: you see the models it found and ch
    ollama pull qwen3:4b
    ```
    Small models (1–4B parameters) are fast. Larger ones (8B and up) give better answers but need a good GPU or plenty of RAM.
-3. In T4B, choose **Run free on this PC** (or **Find on this computer** in Settings → Connections). T4B finds Ollama and adds it, and your models appear in the **Model** picker. A running Ollama or LM Studio is usually found automatically when T4B starts.
+3. In T4B, choose **Run free on this PC** (or **Find on this computer** in Settings → Connections). T4B finds Ollama and adds it, and your models appear in the model picker under the chat box. A running Ollama or LM Studio is usually found automatically when T4B starts.
 
 ### Cloud models
 
 1. Get an API key from the service: OpenAI, Anthropic, OpenRouter, Google Gemini, Groq, Mistral, DeepSeek, xAI or Together AI, or AWS credentials for Bedrock.
 2. **Add connection → Cloud accounts**, choose the service and paste the key. For the ready-made services the address is filled in for you. Keys are stored encrypted on your computer.
-3. Click **Test connection**, choose which models to show, then **Add connection**. Pick a model in the sidebar.
+3. Click **Test connection**, choose which models to show, then **Add connection**. Pick a model from the model picker under the chat box.
 
 ### A company server
 
@@ -124,11 +124,11 @@ IT teams can set this up once and use **Export (without keys)**; colleagues use 
 
 ## 4. Your first chat
 
-1. Pick a model in the sidebar's **Model** picker. Models are grouped by connection; star your favourites and use the pin to make one the default for new chats. You can also switch a chat's model from its header.
+1. Pick a model with the **model picker under the chat box** (or on the start screen when no chat is open). Models are grouped by connection; star your favourites and use the pin to make one the default for new chats. You can switch a chat's model at any time the same way.
 2. Click **New Chat**.
 3. Type your question and press **Enter**. Use **Shift+Enter** for a new line.
 
-![The model picker, with models grouped by connection](docs/images/model-picker.jpg)
+![The model picker under the chat box, open and showing models grouped by connection](docs/images/model-picker.jpg)
 
 Under the message box:
 
@@ -223,7 +223,7 @@ You can also connect **MCP servers** (Settings → MCP Servers) for services suc
 
 | Problem | Try this |
 |---|---|
-| "No models found" | Check that Ollama (or your server) is running, then click the refresh icon next to the connection in the model picker. Check **Status** to see which servers respond |
+| "No models found" | Check that Ollama (or your server) is running, then open the model picker under the chat box and click the refresh icon next to the connection. Check **Status** to see which servers respond |
 | Local model is slow | Pick a smaller model, turn off 🧠 thinking, and check **Status** to see whether the model is on the GPU or the CPU |
 | The model doesn't use a tool | Small models sometimes ignore tools. Try a larger model, set 🔧 to **On**, or name the tool ("search the web for…") |
 | Web search says "no service is set up" | Choose Brave, Tavily or SearXNG in **Settings → Tools** and click **Test** |
