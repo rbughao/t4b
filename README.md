@@ -26,6 +26,14 @@ Get the latest installer from the [Releases page](https://github.com/rbughao/t4b
 
 The installers contain no API keys or connector credentials; you add your own after installing.
 
+## What's new in 0.2.3
+
+- **Long chats keep their memory.** When a chat gets longer than the model can read at once, T4B summarizes the older messages instead of forgetting them. [More](#long-chats)
+- **Notebooks open as tiles**, so you can see all your notebooks, their sources and status at a glance. [More](#5-everyday-features)
+- **Big tool results are trimmed to fit**, so the model never loses its instructions or your question.
+- **Automatic updates** from this page on Windows and the Linux AppImage. [More](#2-install)
+- **Model picker under the chat box**, and a hardened app: sandboxed windows, links open in your browser, remote images in replies aren't loaded.
+
 ---
 
 # Part 1 — Install and use
@@ -82,7 +90,17 @@ Download the installer for your system from the [Releases page](https://github.c
 
 On macOS and Linux, run-command tools use the system shell (`/bin/sh`) instead of PowerShell.
 
-**Upgrading.** Install the new version over your existing copy. Your chats, notebooks, settings and saved keys carry over. New versions are published on the [Releases page](https://github.com/rbughao/t4b/releases).
+**Upgrading.** Install the new version over your existing copy. Your chats, notebooks, settings and saved keys carry over.
+
+**Updates.** From version 0.2.3, T4B checks the [Releases page](https://github.com/rbughao/t4b/releases) for new versions in the background:
+
+| Installer | Updates |
+|---|---|
+| Windows `.exe` | Automatic. The update downloads in the background; click **Settings → General → Updates → Restart and update**, or it installs the next time you quit |
+| Linux AppImage | Automatic, the same way |
+| macOS, Linux `.tar.gz` | Download each new version from the Releases page (automatic updates on macOS need a signed app) |
+
+If you have version 0.2.2 or earlier, install 0.2.3 by hand once; later versions then arrive automatically.
 
 ## 3. Connect an AI model
 
@@ -143,12 +161,26 @@ Under the message box:
 | 🔧 | Tool mode: **Auto** (only relevant tools), **On** (all tools) or **Off** |
 | 🎤 | Speak your question instead of typing it |
 
-Each reply shows the tokens used and, for cloud models, its cost. The bar at the top right shows how much of the model's memory the chat is using.
+Each reply shows the tokens used and, for cloud models, its cost. The bar at the top right shows how much of the model's memory (its context window) the chat is using.
+
+### Long chats
+
+Every model can only read so much at once. When a chat gets longer than that, T4B has the chat's own model write a summary of the older messages and sends the summary instead, so the model keeps your goals, decisions, numbers and file names rather than forgetting the start of the conversation.
+
+- Your messages stay in the chat. An **Earlier messages summarized** divider marks where the summary begins; click it to see what the model remembers.
+- Click the fold icon next to the memory bar to **compact a chat now**, for example before a long follow-up.
+- The summary is made by the same connection as the chat, so nothing goes to another provider. With cloud models it costs a little, like any request.
+- Large tool results (a big file, long command output) are trimmed to fit, so the model always keeps its instructions and your question.
+- Turn automatic summaries off in **Settings → General → Long chats**; the oldest messages are then simply left out once a chat is too long.
+
+![A long budget chat: the "Earlier messages summarized" divider expanded, showing the goal, decisions and amounts the model remembers](docs/images/chat-summary.jpg)
 
 ## 5. Everyday features
 
 - **Attach documents.** Drop in PDFs (including scanned ones), Word, Excel, PowerPoint, Outlook `.msg` and `.eml` emails, EPUB, HTML, text and code. T4B extracts the text and sends it with your question.
-- **Notebooks** (sidebar → Notebooks). Collections of your documents. Ask questions and get answers grounded only in those documents, with the sources named. Add files, whole folders or web pages. Turn on **Full documents** for small notebooks so the model reads everything.
+- **Notebooks** (sidebar → Notebooks). Collections of your documents. Ask questions and get answers grounded only in those documents, with the sources named. Add files, whole folders or web pages. Turn on **Full documents** for small notebooks so the model reads everything. Notebooks open as tiles showing each notebook's sources, anything still processing or failed, and when it was last updated; click a tile to open it, and the back arrow returns to the tiles. Long notebook chats are summarized the same way as other [long chats](#long-chats).
+
+  ![The Notebooks view: a tile for each notebook with its sources and last update, plus a New notebook tile](docs/images/notebook-tiles.jpg)
 
   ![A notebook answering from two policy documents, with Full documents switched on](docs/images/notebook-full-documents.jpg)
 
@@ -209,7 +241,7 @@ You can also connect **MCP servers** (Settings → MCP Servers) for services suc
 | MCP Servers | Connect external tools |
 | Tools | Built-in tool switches, leak protection, web search service, API keys for API calls, memories |
 | Appearance | Aurora or Graphite Teal style; light, dark or system mode; density |
-| General | Tool approval, voice input, notebook search, OCR languages, quick-ask shortcut, data folder |
+| General | Tool approval, long chats (automatic summaries), voice input, notebook search, OCR languages, quick-ask shortcut, data folder, updates |
 
 | Aurora light (default) | Aurora dark | Graphite Teal dark |
 |---|---|---|
@@ -228,6 +260,7 @@ You can also connect **MCP servers** (Settings → MCP Servers) for services suc
 | The model doesn't use a tool | Small models sometimes ignore tools. Try a larger model, set 🔧 to **On**, or name the tool ("search the web for…") |
 | Web search says "no service is set up" | Choose Brave, Tavily or SearXNG in **Settings → Tools** and click **Test** |
 | Scanned PDF comes out empty | The first OCR run downloads language data, so make sure you're online. Add languages in Settings → General → Reading scanned documents |
+| The model forgot something from early in a long chat | Click **Earlier messages summarized** to see what it remembers, and restate anything missing. Make sure **Settings → General → Long chats** is on |
 | Quick ask shortcut doesn't work | Another app may be using it. Pick another shortcut in Settings → General |
 | "Windows protected your PC" when installing | The installer isn't signed yet. Use **More info → Run anyway**, but only for an installer from a trusted source |
 
