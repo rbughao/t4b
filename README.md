@@ -26,6 +26,14 @@ Get the latest installer from the [Releases page](https://github.com/rbughao/t4b
 
 The installers contain no API keys or connector credentials; you add your own after installing.
 
+## What's new in 0.2.4
+
+- **Clickable citations.** Click a file or source an answer names to see the exact passage, highlighted, in a side panel. [More](#citations-and-source-preview)
+- **Charts and polished exports.** Ask for a chart and get one; save replies or whole chats as branded PDF reports or Word documents. [More](#charts-and-reports)
+- **Privacy shield.** Email addresses, phone numbers, NRIC/FIN, card numbers and more are masked before a message reaches a cloud model. [More](#7-safety-and-privacy)
+- **Workflows and agent mode.** Save a chat as a one-click workflow, or let T4B plan and carry out a multi-step task. [More](#workflows-and-agent-mode)
+- **Screen snip and drop anything.** Press Alt+Shift+S to attach part of your screen; drop files, folders or links anywhere on the chat; paste screenshots. [More](#screen-snip-drop-and-paste)
+
 ## What's new in 0.2.3
 
 - **Long chats keep their memory.** When a chat gets longer than the model can read at once, T4B summarizes the older messages instead of forgetting them. [More](#long-chats)
@@ -154,11 +162,13 @@ Under the message box:
 |---|---|
 | ⚡ | Insert a **Skill**, a ready-made task such as *Summarise* or *Translate* |
 | 📎 | Attach files: PDF, Word, Excel, PowerPoint, emails, images and more |
+| ✂️ | **Snip** part of the screen and attach it (or press **Alt+Shift+S** anywhere) |
 | 🌐 | Add a web page by its link |
 | 📄 | Insert a prompt template (or type `/`) |
 | 📁 | Give T4B access to a folder, so it can read, search and create files there |
 | 🧠 | Turn the model's visible "thinking" on or off for this chat (off is faster) |
 | 🔧 | Tool mode: **Auto** (only relevant tools), **On** (all tools) or **Off** |
+| 🤖 | **Agent mode**: T4B plans the task and works through it with its tools |
 | 🎤 | Speak your question instead of typing it |
 
 Each reply shows the tokens used and, for cloud models, its cost. The bar at the top right shows how much of the model's memory (its context window) the chat is using.
@@ -174,6 +184,42 @@ Every model can only read so much at once. When a chat gets longer than that, T4
 - Turn automatic summaries off in **Settings → General → Long chats**; the oldest messages are then simply left out once a chat is too long.
 
 ![A long budget chat: the "Earlier messages summarized" divider expanded, showing the goal, decisions and amounts the model remembers](docs/images/chat-summary.jpg)
+
+### Citations and source preview
+
+When an answer names a file you attached or a notebook source, the name is a link. Click it to open the document in a panel beside the chat, scrolled to the passage the answer used and highlighted. If the answer cites a page ("q3-review.pdf, page 2"), that page is highlighted. In notebooks, the source cards under an answer are clickable too, and **Open original** opens the file in its own app.
+
+### Charts and reports
+
+Ask for a chart ("chart revenue by region") and T4B draws one: bar, line, area or pie, in colours that work for colour-blind readers and in dark mode. Each chart has **Data** (the numbers as a table), **Copy image** and **Save PNG**.
+
+To share results, use **Save** on a reply or **Save → PDF report / Word document** in the chat header. PDF reports carry a T4B header, the title and date, your questions, the answers with their tables and charts, and page numbers. Word documents keep the formatting, with charts as tables.
+
+![An answer with a bar chart and a table, and the side panel showing the cited PDF page highlighted](docs/images/citations-chart.jpg)
+
+<p align="center"><img src="docs/images/pdf-report.jpg" alt="A chat exported as a PDF report: T4B header, title and date, the question, a bar chart and a table" width="55%"></p>
+
+### Workflows and agent mode
+
+**Workflows** (sidebar → Workflows) turn a task you do often into one click.
+
+1. After a chat that went well, click **Save as workflow** in the chat header. Its questions become the steps.
+2. Replace the parts that change each time with `{{name}}`, for example `{{month}}` or `{{report_file}}`. File inputs attach the file you pick.
+3. Click **Run**, fill in the inputs, and T4B sends each step after the previous reply, showing its progress with a **Stop** button.
+
+Workflows can be exported to a file and imported by colleagues.
+
+**Agent mode** (the 🤖 button in the chat box) is for tasks with several steps. T4B starts with a plan as a checklist, works through it with every available tool, ticks the steps off, and ends with a summary. Anything that changes data still asks for your approval, and a reply stops after 30 tool steps. A capable model works best.
+
+| Agent mode | Workflows | Running a workflow |
+|---|---|---|
+| ![Agent mode: a plan checklist, a comparison table and a recommendation](docs/images/agent-mode.jpg) | ![The Workflows list with three saved workflows](docs/images/workflows.jpg) | ![The run form asking for a spreadsheet and a month](docs/images/workflow-run.jpg) |
+
+### Screen snip, drop and paste
+
+- **Screen snip.** Press **Alt+Shift+S** anywhere (or ✂️ in the chat box), drag over part of the screen, and the picture is attached to your chat: an error message, a chart, a form. Use a model that can read images. Change the shortcut in **Settings → General → Screen snip**.
+- **Drop anything on the chat.** Files and images are attached, a folder gives T4B access to it (after you confirm), a link is read as a web page, and text goes into the message box.
+- **Paste** screenshots or copied files straight into the message box.
 
 ## 5. Everyday features
 
@@ -229,6 +275,12 @@ You can also connect **MCP servers** (Settings → MCP Servers) for services suc
   ![Approval dialog asking before a command that stops a cloud server](docs/images/tool-approval.jpg)
 
 - **Leak protection.** Web pages, files and command output can hide instructions aimed at the AI. Once a reply has read such content, T4B won't let the model send newly composed data anywhere (links, searches, commands, API calls) without asking you first. Keep this on in **Settings → Tools**.
+- **Privacy shield.** Before a message goes to a cloud model, T4B looks for email addresses, phone numbers, NRIC/FIN, card numbers, bank accounts (IBAN) and IP addresses, and offers to mask them. The model receives placeholders such as `[EMAIL_1]`; the real values stay on your computer and are put back into the reply, and your message shows how many details were masked. Choose **Ask me**, **Always mask** or **Off** in **Settings → General → Privacy shield**. Local models are never affected. It recognises these patterns only, so names and other free-text details are not masked.
+
+  | Before sending | After |
+  |---|---|
+  | ![The privacy shield asking to mask an email address and an NRIC](docs/images/privacy-dialog.jpg) | ![The sent message marked "2 personal details masked before sending", with the real values back in the reply](docs/images/privacy-masked.jpg) |
+
 - **Safe links and images.** Links in replies open in your normal browser, never inside T4B, and images from remote servers in replies are not loaded.
 - **Your data stays on your computer.** Chats, notebooks and memories are stored in T4B's data folder (`%APPDATA%\airo` on Windows), and API keys are encrypted with your operating system's own protection. Back up that folder to keep a copy (**Settings → General → Your data**).
 - **What leaves your computer.** Your messages and attachments go to the model provider you chose. With a local model, nothing leaves your computer except the web searches and pages you ask for.
@@ -241,7 +293,7 @@ You can also connect **MCP servers** (Settings → MCP Servers) for services suc
 | MCP Servers | Connect external tools |
 | Tools | Built-in tool switches, leak protection, web search service, API keys for API calls, memories |
 | Appearance | Aurora or Graphite Teal style; light, dark or system mode; density |
-| General | Tool approval, long chats (automatic summaries), voice input, notebook search, OCR languages, quick-ask shortcut, data folder, updates |
+| General | Tool approval, privacy shield, long chats (automatic summaries), voice input, notebook search, OCR languages, quick-ask and screen-snip shortcuts, data folder, updates |
 
 | Aurora light (default) | Aurora dark | Graphite Teal dark |
 |---|---|---|
@@ -261,6 +313,8 @@ You can also connect **MCP servers** (Settings → MCP Servers) for services suc
 | Web search says "no service is set up" | Choose Brave, Tavily or SearXNG in **Settings → Tools** and click **Test** |
 | Scanned PDF comes out empty | The first OCR run downloads language data, so make sure you're online. Add languages in Settings → General → Reading scanned documents |
 | The model forgot something from early in a long chat | Click **Earlier messages summarized** to see what it remembers, and restate anything missing. Make sure **Settings → General → Long chats** is on |
+| A snipped image gets no useful answer | The model may not read images. Pick a vision model (for example gemma3, llava or a cloud model) |
+| The privacy shield didn't mask a name | It recognises emails, phone numbers, NRIC/FIN, cards, IBANs and IP addresses only. Remove other details yourself or use a local model |
 | Quick ask shortcut doesn't work | Another app may be using it. Pick another shortcut in Settings → General |
 | "Windows protected your PC" when installing | The installer isn't signed yet. Use **More info → Run anyway**, but only for an installer from a trusted source |
 
