@@ -26,6 +26,12 @@ Get the latest installer from the [Releases page](https://github.com/rbughao/t4b
 
 The installers contain no API keys or connector credentials; you add your own after installing.
 
+## What's new in 0.2.5
+
+- **Reads modern websites.** Pages that build their content with JavaScript, or refuse plain downloads, are read with a hidden browser automatically. [More](#websites-reading-browsing-and-monitoring)
+- **Website monitors.** Check your sites on a schedule and get an alert when one goes down. [More](#website-monitors)
+- **Browse websites.** T4B can open pages, click, fill in search boxes and forms, and work through several pages, with your approval. [More](#browsing-websites)
+
 ## What's new in 0.2.4
 
 - **Clickable citations.** Click a file or source an answer names to see the exact passage, highlighted, in a side panel. [More](#citations-and-source-preview)
@@ -215,6 +221,33 @@ Workflows can be exported to a file and imported by colleagues.
 |---|---|---|
 | ![Agent mode: a plan checklist, a comparison table and a recommendation](docs/images/agent-mode.jpg) | ![The Workflows list with three saved workflows](docs/images/workflows.jpg) | ![The run form asking for a spreadsheet and a month](docs/images/workflow-run.jpg) |
 
+### Websites: reading, browsing and monitoring
+
+**Reading.** Give T4B a link (🌐, drop it on the chat, or just paste it in your message) and it reads the page's main content. Pages that build their content with JavaScript, or that refuse plain downloads, are read with a hidden browser automatically. Online PDF and Office files work too.
+
+#### Browsing websites
+
+For tasks that need more than reading one page, such as using a site's search box, filling in a form or going through several pages, T4B uses its **Browse websites** tool, for example: *"Go to the Contoso shop, search for laptop and tell me the price of the first result."*
+
+- It opens the page and sees its text plus a numbered list of links, buttons and fields, then clicks, types, picks options, scrolls and goes back as needed.
+- **You stay in control.** Opening, reading and scrolling happen on their own; **every click, typed entry and choice asks for your approval** (you can always-allow clicks without allowing typing). It never types into password fields. Before anything that buys, sends or books, it should check with you.
+- **Private.** Each chat gets its own separate browser with no access to T4B's data, your other chats or your normal browser. It can't download files or use the camera, microphone or location, and it closes after 10 idle minutes.
+- **Watch or sign in yourself.** Turn on **Settings → Tools → Browser → Show the browser window** to see what it does, or to sign in to a site yourself before asking T4B to continue.
+- Larger models are much better at multi-step browsing than small local ones. Sites with CAPTCHAs can't be automated.
+
+![T4B searched a shop website and answered with the price it found](docs/images/browse-chat.jpg)
+
+#### Website monitors
+
+**Status → Websites → Add website** checks a site on a schedule (every minute to once a day). A check passes when the site answers with a success code; you can also require that the page contains some text, or that it answers within a time limit.
+
+- Each monitor shows whether it's up, uptime over the last 24 hours, average response time and a response-time chart with failed checks marked in red.
+- You get a **desktop alert** when a site goes down (two failed checks in a row, to avoid false alarms) and when it comes back.
+- Or ask in a chat: *"Monitor acme.com every 5 minutes"*, *"Is the booking site down?"*, *"Show me uptime for our sites."*
+- Monitors run while T4B is open.
+
+![The Websites section of the Status page: four monitors with uptime, response-time charts and one site down with HTTP 503](docs/images/website-monitors.jpg)
+
 ### Screen snip, drop and paste
 
 - **Screen snip.** Press **Alt+Shift+S** anywhere (or ✂️ in the chat box), drag over part of the screen, and the picture is attached to your chat: an error message, a chart, a form. Use a model that can read images. Change the shortcut in **Settings → General → Screen snip**.
@@ -240,7 +273,7 @@ Workflows can be exported to a file and imported by colleagues.
 - **Quick ask.** Press **Ctrl+Shift+Space** anywhere to ask a question without switching apps. The answer opens as a new chat.
 - **Code panel.** Click **Open in panel** on any code block to edit it, preview HTML, or save it to your project.
 - **Projects.** Group chats by project. Project chats are saved as files inside the project's folder.
-- **Status** (pulse icon in the sidebar header). See which model servers are running, what's loaded on your GPU, MCP server health, and this month's spending against your budget.
+- **Status** (pulse icon in the sidebar header). See which model servers are running, what's loaded on your GPU, your [website monitors](#website-monitors), MCP server health, and this month's spending against your budget.
 
   ![Status: model servers, GPU use and monthly spending by model](docs/images/status-spending.jpg)
 
@@ -255,7 +288,9 @@ T4B's tools let the model act, not just talk. Each tool is only offered when you
 | Ask something like… | Tool used |
 |---|---|
 | "What's the latest on the EU AI Act?" | **Web search**, then **Read web pages**. Set up the search service first in Settings → Tools |
-| "Summarise https://…" | **Read web pages** |
+| "Summarise https://…" | **Read web pages** (uses a hidden browser for pages that need JavaScript) |
+| "Search the Contoso shop for laptops and tell me the cheapest" | **Browse websites** (asks before each click or entry) |
+| "Monitor acme.com every 5 minutes", "Is our site down?" | **Website monitors** |
 | "Find the invoice that mentions PO-4471" (folder granted) | **Search files** |
 | "Total sales by region in sales.xlsx" | **Analyse spreadsheets** (exact SQL, no guessing) |
 | "Turn this into a Word document called Q3 summary.docx" | **Create documents** (Word, PDF, Excel, HTML) |
@@ -291,7 +326,7 @@ You can also connect **MCP servers** (Settings → MCP Servers) for services suc
 |---|---|
 | Connections | Add, test, edit, reorder, switch off or remove connections; find local servers; import/export without keys |
 | MCP Servers | Connect external tools |
-| Tools | Built-in tool switches, leak protection, web search service, API keys for API calls, memories |
+| Tools | Built-in tool switches, leak protection, browser window (show or hide), web search service, API keys for API calls, memories |
 | Appearance | Aurora or Graphite Teal style; light, dark or system mode; density |
 | General | Tool approval, privacy shield, long chats (automatic summaries), voice input, notebook search, OCR languages, quick-ask and screen-snip shortcuts, data folder, updates |
 
@@ -310,6 +345,8 @@ You can also connect **MCP servers** (Settings → MCP Servers) for services suc
 | "No models found" | Check that Ollama (or your server) is running, then open the model picker under the chat box and click the refresh icon next to the connection. Check **Status** to see which servers respond |
 | Local model is slow | Pick a smaller model, turn off 🧠 thinking, and check **Status** to see whether the model is on the GPU or the CPU |
 | The model doesn't use a tool | Small models sometimes ignore tools. Try a larger model, set 🔧 to **On**, or name the tool ("search the web for…") |
+| A page comes back empty or "needs a sign-in" | Turn on **Settings → Tools → Browser → Show the browser window**, sign in to the site yourself in that window, then ask T4B to continue browsing |
+| A website monitor says "couldn't be found (DNS)" | Check the address. Intranet sites only work when your computer is on that network (or VPN) |
 | Web search says "no service is set up" | Choose Brave, Tavily or SearXNG in **Settings → Tools** and click **Test** |
 | Scanned PDF comes out empty | The first OCR run downloads language data, so make sure you're online. Add languages in Settings → General → Reading scanned documents |
 | The model forgot something from early in a long chat | Click **Earlier messages summarized** to see what it remembers, and restate anything missing. Make sure **Settings → General → Long chats** is on |
