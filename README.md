@@ -26,6 +26,10 @@ Get the latest installer from the [Releases page](https://github.com/rbughao/t4b
 
 The installers contain no API keys or connector credentials; you add your own after installing.
 
+## What's new in 0.2.7
+
+- **Lower cost with cloud models.** With many MCP connectors, cloud models now receive only the tools of the connectors your request relates to, not every tool with every message. [More](#6-tools-what-t4b-can-do-for-you)
+
 ## What's new in 0.2.6
 
 - **Protection against prompt injection.** Web pages, files and tool results that hide instructions for the AI are marked as data, flagged when suspicious, and can't make T4B act without your approval. [More](#protection-against-prompt-injection)
@@ -307,6 +311,8 @@ T4B's tools let the model act, not just talk. Each tool is only offered when you
 
 You can also connect **MCP servers** (Settings → MCP Servers) for services such as Slack, Jira or databases.
 
+**T4B only offers what a request needs.** Built-in tools are offered when your message calls for them (web search when you ask about the web, folder tools when a folder is shared). Connector tools are attached only for the connectors your request relates to, so asking about "pods" brings in your Kubernetes connector and an ordinary question goes as a plain, fast chat. This keeps small local models focused and saves tokens, and cost, with cloud models. With 15 connector tools or fewer, cloud models get them all. To always send every connector tool to cloud models, choose **Settings → Tools → Connector tools for cloud models → Always send every tool**, or set a chat's 🔧 to **On**.
+
 ## 7. Safety and privacy
 
 - **Approval before actions.** T4B asks before any tool that could change something: running a command that isn't read-only, sending an API request other than GET, writing a file, or calling an MCP tool that makes changes. Change this in **Settings → General → Tool approval**.
@@ -346,7 +352,7 @@ No defence against prompt injection is perfect, because the AI reads the content
 |---|---|
 | Connections | Add, test, edit, reorder, switch off or remove connections; find local servers; import/export without keys |
 | MCP Servers | Connect external tools |
-| Tools | Built-in tool switches, leak and prompt-injection protection, browser window (show or hide), web search service, API keys for API calls, memories |
+| Tools | Built-in tool switches, connector tools for cloud models, leak and prompt-injection protection, browser window (show or hide), web search service, API keys for API calls, memories |
 | Appearance | Aurora or Graphite Teal style; light, dark or system mode; density |
 | General | Tool approval, privacy shield, long chats (automatic summaries), voice input, notebook search, OCR languages, quick-ask and screen-snip shortcuts, data folder, updates |
 
@@ -364,7 +370,7 @@ No defence against prompt injection is perfect, because the AI reads the content
 |---|---|
 | "No models found" | Check that Ollama (or your server) is running, then open the model picker under the chat box and click the refresh icon next to the connection. Check **Status** to see which servers respond |
 | Local model is slow | Pick a smaller model, turn off 🧠 thinking, and check **Status** to see whether the model is on the GPU or the CPU |
-| The model doesn't use a tool | Small models sometimes ignore tools. Try a larger model, set 🔧 to **On**, or name the tool ("search the web for…") |
+| The model doesn't use a tool | Small models sometimes ignore tools. Try a larger model, set 🔧 to **On**, or name the tool or service ("search the web for…", "…in Jira"): T4B only attaches connectors your request relates to |
 | A page comes back empty or "needs a sign-in" | Turn on **Settings → Tools → Browser → Show the browser window**, sign in to the site yourself in that window, then ask T4B to continue browsing |
 | A website monitor says "couldn't be found (DNS)" | Check the address. Intranet sites only work when your computer is on that network (or VPN) |
 | "Possible prompt injection" appears | Something T4B read looks like instructions aimed at the AI. Your chat is fine; just check each approval it asks for in that reply and deny anything you didn't ask for |
