@@ -26,6 +26,10 @@ Get the latest installer from the [Releases page](https://github.com/rbughao/t4b
 
 The installers contain no API keys or connector credentials; you add your own after installing.
 
+## What's new in 0.2.8
+
+- **Run your Tootsy tiles from T4B.** If you use the Tootsy Chrome extension, ask T4B to run one of its prompt tiles and use the answer in your chat. [More](#run-your-tootsy-chrome-extension-tiles)
+
 ## What's new in 0.2.7
 
 - **Lower cost with cloud models.** With many MCP connectors, cloud models now receive only the tools of the connectors your request relates to, not every tool with every message. [More](#6-tools-what-t4b-can-do-for-you)
@@ -229,6 +233,21 @@ Workflows can be exported to a file and imported by colleagues.
 |---|---|---|
 | ![Agent mode: a plan checklist, a comparison table and a recommendation](docs/images/agent-mode.jpg) | ![The Workflows list with three saved workflows](docs/images/workflows.jpg) | ![The run form asking for a spreadsheet and a month](docs/images/workflow-run.jpg) |
 
+### Run your Tootsy Chrome extension tiles
+
+If you use **Tootsy**, the Chrome extension with prompt tiles, T4B can run those tiles for you: ask *"Run my Weekly KPIs tile for EMEA"*. The tile runs in your Chrome, in the background, with the model you set up in Tootsy, and T4B uses its answer in the reply.
+
+1. In T4B: **Settings → Tools → Tootsy Chrome extension** → turn it on and click **Copy** next to the pairing code.
+2. In Tootsy 1.17 or later, in the Chrome profile you want to use: **Settings → T4B desktop app** → tick **Let T4B run tiles here** and paste the code. T4B then shows *Connected to Tootsy*.
+3. In Tootsy, open each tile T4B may run (⋯ → Edit…) and tick **Can run from T4B**. The tiles appear in T4B's settings.
+
+- **You stay in control.** Off by default on both sides; T4B only sees the tiles you tick, and asks you before every run. Tootsy can also ask (*Ask me first*).
+- **Private.** T4B and Tootsy talk directly on your computer, never through the internet. T4B only accepts the Tootsy extension with your pairing code, so it works with the Chrome profile you paired; **New code** disconnects the old one.
+- **Safe.** T4B can only name a tile and answer its questions, never send other instructions. The tile runs like a scheduled tile in Tootsy: actions that need approval there are skipped. Its answer is treated as outside content, so T4B's [prompt-injection protection](#protection-against-prompt-injection) applies.
+- Both must be open: T4B, and Chrome with that profile.
+
+![Settings → Tools → Tootsy Chrome extension: connected, with the pairing code, port and the tiles T4B may run](docs/images/tootsy-link.jpg)
+
 ### Websites: reading, browsing and monitoring
 
 **Reading.** Give T4B a link (🌐, drop it on the chat, or just paste it in your message) and it reads the page's main content. Pages that build their content with JavaScript, or that refuse plain downloads, are read with a hidden browser automatically. Online PDF and Office files work too.
@@ -299,6 +318,7 @@ T4B's tools let the model act, not just talk. Each tool is only offered when you
 | "Summarise https://…" | **Read web pages** (uses a hidden browser for pages that need JavaScript) |
 | "Search the Contoso shop for laptops and tell me the cheapest" | **Browse websites** (asks before each click or entry) |
 | "Monitor acme.com every 5 minutes", "Is our site down?" | **Website monitors** |
+| "Run my Weekly KPIs tile for EMEA" | **Tootsy tiles** (asks before each run) |
 | "Find the invoice that mentions PO-4471" (folder granted) | **Search files** |
 | "Total sales by region in sales.xlsx" | **Analyse spreadsheets** (exact SQL, no guessing) |
 | "Turn this into a Word document called Q3 summary.docx" | **Create documents** (Word, PDF, Excel, HTML) |
@@ -352,7 +372,7 @@ No defence against prompt injection is perfect, because the AI reads the content
 |---|---|
 | Connections | Add, test, edit, reorder, switch off or remove connections; find local servers; import/export without keys |
 | MCP Servers | Connect external tools |
-| Tools | Built-in tool switches, connector tools for cloud models, leak and prompt-injection protection, browser window (show or hide), web search service, API keys for API calls, memories |
+| Tools | Built-in tool switches, connector tools for cloud models, Tootsy Chrome extension link, leak and prompt-injection protection, browser window (show or hide), web search service, API keys for API calls, memories |
 | Appearance | Aurora or Graphite Teal style; light, dark or system mode; density |
 | General | Tool approval, privacy shield, long chats (automatic summaries), voice input, notebook search, OCR languages, quick-ask and screen-snip shortcuts, data folder, updates |
 
@@ -372,6 +392,7 @@ No defence against prompt injection is perfect, because the AI reads the content
 | Local model is slow | Pick a smaller model, turn off 🧠 thinking, and check **Status** to see whether the model is on the GPU or the CPU |
 | The model doesn't use a tool | Small models sometimes ignore tools. Try a larger model, set 🔧 to **On**, or name the tool or service ("search the web for…", "…in Jira"): T4B only attaches connectors your request relates to |
 | A page comes back empty or "needs a sign-in" | Turn on **Settings → Tools → Browser → Show the browser window**, sign in to the site yourself in that window, then ask T4B to continue browsing |
+| T4B says "Waiting for Tootsy" | Open Chrome with the profile you paired, and check Tootsy → Settings → T4B desktop app: **Let T4B run tiles here** ticked, the same pairing code and port as in T4B |
 | A website monitor says "couldn't be found (DNS)" | Check the address. Intranet sites only work when your computer is on that network (or VPN) |
 | "Possible prompt injection" appears | Something T4B read looks like instructions aimed at the AI. Your chat is fine; just check each approval it asks for in that reply and deny anything you didn't ask for |
 | Web search says "no service is set up" | Choose Brave, Tavily or SearXNG in **Settings → Tools** and click **Test** |
