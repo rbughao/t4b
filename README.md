@@ -26,6 +26,11 @@ Get the latest installer from the [Releases page](https://github.com/rbughao/t4b
 
 The installers contain no API keys or connector credentials; you add your own after installing.
 
+## What's new in 0.2.9
+
+- **Fixed: "Cannot read properties of undefined (reading 'role')".** Chats no longer fail when connector tools fill most of a model's context, and the newest tool result is always kept.
+- **More reliable Tootsy tiles.** T4B tells the model your tile names, and starts the run itself, after your approval, when you clearly ask and the model doesn't use the tool. [More](#run-your-tootsy-chrome-extension-tiles)
+
 ## What's new in 0.2.8
 
 - **Run your Tootsy tiles from T4B.** If you use the Tootsy Chrome extension, ask T4B to run one of its prompt tiles and use the answer in your chat. [More](#run-your-tootsy-chrome-extension-tiles)
@@ -244,6 +249,9 @@ If you use **Tootsy**, the Chrome extension with prompt tiles, T4B can run those
 - **You stay in control.** Off by default on both sides; T4B only sees the tiles you tick, and asks you before every run. Tootsy can also ask (*Ask me first*).
 - **Private.** T4B and Tootsy talk directly on your computer, never through the internet. T4B only accepts the Tootsy extension with your pairing code, so it works with the Chrome profile you paired; **New code** disconnects the old one.
 - **Safe.** T4B can only name a tile and answer its questions, never send other instructions. The tile runs like a scheduled tile in Tootsy: actions that need approval there are skipped. Its answer is treated as outside content, so T4B's [prompt-injection protection](#protection-against-prompt-injection) applies.
+- **Works with models that skip tools.** If you clearly ask to run a tile (*"run Pagespeed"*, or *"run it in Tootsy"* when you share one tile) and the model answers in text instead, T4B starts the run itself, after your approval.
+- **Tiles run as saved.** A site or value written into a tile's prompt is used every time. To choose it per run, use a blank such as `{{ask: Which website?}}` in Tootsy, and T4B asks you for it.
+- Install Tootsy from the Chrome Web Store: T4B doesn't accept copies loaded with "Load unpacked".
 - Both must be open: T4B, and Chrome with that profile.
 
 ![Settings → Tools → Tootsy Chrome extension: connected, with the pairing code, port and the tiles T4B may run](docs/images/tootsy-link.jpg)
@@ -392,7 +400,7 @@ No defence against prompt injection is perfect, because the AI reads the content
 | Local model is slow | Pick a smaller model, turn off 🧠 thinking, and check **Status** to see whether the model is on the GPU or the CPU |
 | The model doesn't use a tool | Small models sometimes ignore tools. Try a larger model, set 🔧 to **On**, or name the tool or service ("search the web for…", "…in Jira"): T4B only attaches connectors your request relates to |
 | A page comes back empty or "needs a sign-in" | Turn on **Settings → Tools → Browser → Show the browser window**, sign in to the site yourself in that window, then ask T4B to continue browsing |
-| T4B says "Waiting for Tootsy" | Open Chrome with the profile you paired, and check Tootsy → Settings → T4B desktop app: **Let T4B run tiles here** ticked, the same pairing code and port as in T4B |
+| T4B says "Waiting for Tootsy" | Open Chrome with the profile you paired (use the Chrome Web Store version of Tootsy), and check Tootsy → Settings → T4B desktop app: **Let T4B run tiles here** ticked, the same pairing code and port as in T4B |
 | A website monitor says "couldn't be found (DNS)" | Check the address. Intranet sites only work when your computer is on that network (or VPN) |
 | "Possible prompt injection" appears | Something T4B read looks like instructions aimed at the AI. Your chat is fine; just check each approval it asks for in that reply and deny anything you didn't ask for |
 | Web search says "no service is set up" | Choose Brave, Tavily or SearXNG in **Settings → Tools** and click **Test** |
